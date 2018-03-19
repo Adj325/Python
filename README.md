@@ -1,7 +1,7 @@
 # Python
 
 - [Selenium](https://github.com/Adj325/Python/tree/master/Selenium)<br>
-  - [Selenium自动化总结](https://github.com/Adj325/Python/blob/master/Selenium/Python%20Selenium%20%E8%87%AA%E5%8A%A8%E5%8C%96.md)<br>
+  - [Selenium自动化总结](https://github.com/Adj325/Python/blob/master/Selenium/Python%20Selenium%20%E8%87%AA%E5%8A%A8%E5%8C%96.md)<br>
   - [Selenium与requests相互更换cookies](https://github.com/Adj325/Python/blob/master/Selenium/Selenium%E4%B8%8Erequests%E7%9B%B8%E4%BA%92%E6%9B%B4%E6%8D%A2cookies.md)<br>
 - [Socket](https://github.com/Adj325/Python/tree/master/Socket)<br>
   - [Socket小总结(粗糙)](https://github.com/Adj325/Python/blob/master/Socket/Socket%E5%B0%8F%E6%80%BB%E7%BB%93(%E7%B2%97%E7%B3%99).md)<br>
