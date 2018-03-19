@@ -29,7 +29,7 @@ http://username:password@the-site.com
    - 元素在框架内: 切换到框架
    - 元素的定位不正确(动态id或class): 更改定位方法
    - 由于未知原因, 无法定位: 更换定位方法, xpath或css selector<br>
-   补充: 从浏览器直接copy出来的xpath路径, 以前能用, 现在却不能用, 换为css却行了!
+   补充: 从浏览器直接copy出来的xpath路径, 以前能用, 现在却不能用, 换为css却行了!<br>
 初步怀疑是路径的问题, '/html/body/div/section/section[4]/div[2]/ul/li[4]', 由于对xpath的了解不够多, 所以尚未从根源上解决!
    - 动态路径: 根据网页内容, 动态更改路径
 
@@ -54,9 +54,9 @@ http://username:password@the-site.com
 
 ### 常用函数
 #### 01. 获取cookies
-- cookie = driver.get_cookies()
-cookieList = ['{}={}'.format(item["name"], item["value"])  for item in cookie]  
-cookiestr = '; '.join(cookieList)
+- cookie = driver.get_cookies()<br>
+cookieList = ['{}={}'.format(item["name"], item["value"])  for item in cookie] <br> 
+cookiestr = '; '.join(cookieList)<br>
 
 #### 02. 获取网页源代码
 - driver.page_source
@@ -67,28 +67,27 @@ cookiestr = '; '.join(cookieList)
 注意, 网页网址是实时更新的
 
 #### 04. frame框架切换
-- 切换到id为child_frame的框架: driver.switchTo().frame("child_frame")
-切换回默认框架: driver.switchTo().defaultContent()
-框架的切换是一层一层, 由外到里的
-切进内框架后, 必须在**切回外框架**后, 才能对外框架的元素进行操作
-- 传入id、name、index以及selenium的WebElement对象来切换框架
-传入index时, 0指的是第一个子框架, 不是根框架!
-- 由于不可知原因, 对子框架进行操作时, 有时得多次切换回到默认框架, 再切进子框架, 然后才能对子框架进行操作
+- 切换到id为child_frame的框架: driver.switchTo().frame("child_frame")<br>
+切换回默认框架: driver.switchTo().defaultContent()<br>
+框架的切换是一层一层, 由外到里的<br>
+切进内框架后, 必须在**切回外框架**后, 才能对外框架的元素进行操作<br>
+- 传入id、name、index以及selenium的WebElement对象来切换框架<br>
+传入index时, 0指的是第一个子框架, 不是根框架!<br>
+- 由于不可知原因, 对子框架进行操作时, 有时得多次切换回到默认框架, 再切进子框架, 然后才能对子框架进行操作<br>
 
 #### 05. 获取标签属性
 - tag.get_attribute(attributename)
 a.get_attribute('href')
 
-
 ### 延时, 显/隐式等待
 #### 01. time.sleep()
-- 延时, 固定等待时长
+- 延时, 固定等待时长<br>
 #### 02. Implicit Waits（隐式等待）
-- 隐式等待是在尝试发现某个元素的时候，如果没能立刻发现，就==等待固定长度的时间==(默认为0秒)，等待完成后, 成功发现元素或抛出异常。一旦设置了隐式等待时间，它的作用范围就是Webdriver对象实例的整个生命周期。(修改自: 简书 半个王国)
-1.若无法成功找到元素, 就会等待固定时长后再去寻找
-2.默认0秒, 即: 找不到元素后, 没有等待时长, 于是不再寻找该元素, 直接抛出异常
-3.整个生命周期, 设置一次, 再程序结束前都有效
-隐式等待有时不好用, 程序执行很快, 但是浏览器, 网络很慢, 可能造成每个操作都要等待固定时长-
+- 隐式等待是在尝试发现某个元素的时候，如果没能立刻发现，就==等待固定长度的时间==(默认为0秒)，等待完成后, 成功发现元素或抛出异常。一旦设置了隐式等待时间，它的作用范围就是Webdriver对象实例的整个生命周期。(修改自: 简书 半个王国)<br>
+1.若无法成功找到元素, 就会等待固定时长后再去寻找<br>
+2.默认0秒, 即: 找不到元素后, 没有等待时长, 于是不再寻找该元素, 直接抛出异常<br>
+3.整个生命周期, 设置一次, 再程序结束前都有效<br>
+隐式等待有时不好用, 程序执行很快, 但是浏览器, 网络很慢, 可能造成每个操作都要等待固定时长<br>
 `driver.implicitly_wait(seconds)` 
 
 #### 03. Explicit Waits（显式等待）
