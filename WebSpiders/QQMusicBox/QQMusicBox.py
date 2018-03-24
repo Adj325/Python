@@ -57,7 +57,7 @@ class QQMusicBox:
             li = []
             # 最多获取10页
             for p in range(1, 11):
-                res_song = self.getSonogs(word, p)
+                res_song = self.getSonogs(word, p, 'yes')
                 li += res_song
                 # i += 1
                 with open('data.js', 'w', encoding='utf-8') as f:
@@ -65,6 +65,7 @@ class QQMusicBox:
                     f.write('var songData=' + str(res_song) + ';')
 
     # 获取歌曲
+    # check: 'yes'-检测, '其它'-不检测
     def getSonogs(self, word, p, check='yes'):
         data = {
             'aggr': '0',
@@ -86,7 +87,6 @@ class QQMusicBox:
             'platform': 'yqq',
             'needNewCode': '0'
         }
-
         res_song = []
         session = requests.session()
         data['p'] = str(p)
@@ -139,8 +139,8 @@ class QQMusicBox:
                 song['mp3128'] = mp3128_url
             else:
                 song['mp3128'] = mp3128_url
-
             res_song.append(song)
+        print(res_song)
         return res_song
 
 QQMusicBox()

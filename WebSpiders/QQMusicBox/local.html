@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>高端大气上档次_音乐播放器</title>
+    <meta name="viewport" content="width=device-width,inital-scale=1" charset="UTF-8">
+    <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container center-block">
+    <h1 class="text-center">关键词: <span id='title'></span></h1>
+	
+    <hr>
+
+    <div id="result" style="display: none">
+        <table class="table table-responsive table-hover table-bordered table-condensed text-center">
+            <tbody style="font-weight: bold" id="corBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="data.js"></script>
+<script>
+    function result_show() {
+		$('#title').html(title);
+        $('#result').show();
+        var ori = '<tr><td>歌曲名</td> <td>歌手名</td> <td>唱片名</td> <td>下载链接</td></tr>';
+        $('#corBody').append(ori);
+        for(var i=0; i < songData.length; i++) {
+            var song = songData[i];
+            var s = '<tr><td>'+song.songname+'</td><td>'+song.singer+'</td><td>'+song.albumname+'</td>\r\n';
+            var d = '<td>';
+            if(song.flac != undefined)
+                d += '<a class="btn-danger btn-sm btn" href="'+song.flac+'">Flac</a> ';
+            if(song.ape != undefined)
+                d += '<a class="btn-warning btn-sm btn" href="'+song.ape+'">Ape</a> ';
+            if(song.mp3320 != undefined)
+                d += '<a class="btn-success btn-sm btn" href="'+song.mp3320+'">320</a> ';
+            if(song.mp3128 != undefined)
+                d += '<a class="btn-default btn-sm btn" href="'+song.mp3128+'">128</a> ';
+            d+= '</td></tr>';
+            $('#corBody').append(s+d);
+        }
+        songData = {};
+    }
+	result_show();
+</script>
+</html>
