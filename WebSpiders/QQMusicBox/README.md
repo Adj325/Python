@@ -1,17 +1,20 @@
 # 高端大气上档次音乐播放器
 ### 运行环境
 Python版本: Python 3.x
+
 使用到的库: os, time, requests, requests, flask
 
 - 安装命令: 
-pip install requests
-pip install flask
+
+  pip install requests
+
+  pip install flask
 
 ### 运行方式
 
-程序提供两种方式给用户
+程序提供两种方式: local, flask
 
-- 本地
+- local
 
   运行程序后, 输入关键词, 程序自动爬取歌曲, 实时更新data.js
 
