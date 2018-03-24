@@ -3,26 +3,6 @@ search_url = '''http://soso.music.qq.com/fcgi-bin/search_cp?aggr=0&catZhida=0&lo
 headers = {
     "Host": "soso.music.qq.com",
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87'}
-search_data = {
-    'aggr':'0',
-    'catZhida':'0',
-    'lossless':'1',
-    'sem':'1',
-    'w':'',
-    'n':'15',
-    't':'0',
-    'p':'1',
-    'remoteplace':'wo.shi.nidaye',
-    'g_tk':'5381',
-    'loginUin':'0',
-    'hostUin':'0',
-    'format':'json',
-    'inCharset':'GB2312',
-    'outCharset':'utf-8',
-    'notice':'0',
-    'platform':'yqq',
-    'needNewCode':'0'
-    }
 
 html = '''
 <html>
@@ -57,7 +37,7 @@ while True:
     
     headers['Host'] = 'soso.music.qq.com'
     session = requests.session()
-    r = session.get(search_url.format(key), data=search_data, headers=headers)
+    r = session.get(search_url.format(key), headers=headers)
 
     li = r.json()['data']['song']['list']
     headers['Host'] = 'base.music.qq.com'
