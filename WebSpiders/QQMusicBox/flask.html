@@ -62,17 +62,18 @@
 <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
 <script>
     songData = {};
-	p = 1;
+	p = 0;
     // 点击搜索
     function search() {
         $('#corBody').html("");
         var ori = '<tr><td>歌曲名</td> <td>歌手名</td> <td>唱片名</td> <td>下载链接</td></tr>';
         $('#corBody').append(ori);
-		p = 1;
+		p = 0;
 		getData();
     }
 	// 获取数据
 	function getData(){
+		p += 1;
 		check = 'no';
 		if($('#check').val() == '启用检测')
 			check = 'yes';
