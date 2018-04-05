@@ -78,7 +78,7 @@
 		if($('#check').val() == '启用检测')
 			check = 'yes';
         $.ajax({
-            url: 'http://127.0.0.1:325/?p='+p+'&word='+$('#keyWord').val()+'&check='+check,
+            url: 'http://127.0.0.1:325/getsong?p='+p+'&word='+$('#keyWord').val()+'&check='+check,
             type: 'POST',   // GET POST
             async: true,    // 或false,是否异步
             scriptCharset: 'UTF-8',

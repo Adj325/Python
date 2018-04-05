@@ -1,7 +1,7 @@
 import os
 import time
 import requests
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, request, make_response
 
 class QQMusicBox:
     def __init__(self):
@@ -19,12 +19,13 @@ class QQMusicBox:
     def flask(self):
         app = Flask(__name__)
 
-        @app.route("/", methods=["POST", "GET"])
+        @app.route("/getsong", methods=["POST", "GET"])
         def ajax():
-            word = request.form.get("word", "青花瓷")
-            p = request.form.get("p", "1")
-            check = request.form.get("check", "no")
-            print(word, p)
+            #args = request.args
+            #values = request.values
+            word = request.values.get("word", "青花瓷")
+            p = request.values.get("p", "1")
+            check = request.values.get("check", "no")
             res_song = self.getSonogs(word, p, check)
             rst = make_response(str(res_song))
             rst.headers['Access-Control-Allow-Origin'] = '*'
