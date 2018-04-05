@@ -23,9 +23,19 @@ class QQMusicBox:
         def ajax():
             #args = request.args
             #values = request.values
-            word = request.values.get("word", "青花瓷")
-            p = request.values.get("p", "1")
-            check = request.values.get("check", "no")
+            word = request.values.get("word")
+            if word == '':
+                word = "青花瓷"
+
+            p = request.values.get("p")
+            if p == '':
+                p = "1"
+
+            check = request.values.get("check")
+            if check == '':
+                check = "no"
+
+            print(word, p, check)
             res_song = self.getSonogs(word, p, check)
             rst = make_response(str(res_song))
             rst.headers['Access-Control-Allow-Origin'] = '*'
@@ -35,6 +45,7 @@ class QQMusicBox:
 
     # 对下载链接url, 进行状态码的获取
     def getStatusCode(self, url):
+        '''
         try:
             url = url.replace('/', '%2F').replace('&', '%3F').replace('=', '%3D')
             headers = {
@@ -48,6 +59,16 @@ class QQMusicBox:
             return statuscode
         except:
             return ''
+        '''
+        try:
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87'
+            }
+            r = requests.get(url, headers=headers, stream=True, timeout=0.4)
+            return str(r.status_code)
+        except:
+            return ''
+
 
     # 本地模式
     def local(self):
@@ -63,7 +84,7 @@ class QQMusicBox:
                 # i += 1
                 with open('data.js', 'w', encoding='utf-8') as f:
                     f.write('var title = "{}";\r\n'.format(word))
-                    f.write('var songData=' + str(res_song) + ';')
+                    f.write('var songData=' + str(li) + ';')
 
     # 获取歌曲
     # check: 'yes'-检测, '其它'-不检测
@@ -103,6 +124,7 @@ class QQMusicBox:
             return
         # 变换host, 用于获取vkey
         self.headers['Host'] = 'base.music.qq.com'
+        print()
         for i, v in enumerate(li):
             time.sleep(0.2)
             #print('{0:03d}: {1} - {2}, 专辑: {3}'.format(i+1, v['singer'][0]['name'], v['songname'], v['albumname']))
@@ -121,27 +143,27 @@ class QQMusicBox:
 
             song = {'singer':v['singer'][0]['name'], 'songname':v['songname'], 'albumname':v['albumname']}
 
-            if check == 'yes' and self.getStatusCode(flac_url) == '200':
-                song['flac'] = flac_url
+            if check == 'yes' and self.getStatusCode(flac_url) != '200':
+                pass
             else:
                 song['flac'] = flac_url
 
-            if check == 'yes' and  self.getStatusCode(ape_url) == '200':
-                song['ape'] = ape_url
+            if check == 'yes' and  self.getStatusCode(ape_url) != '200':
+                pass
             else:
                 song['ape'] = ape_url
 
-            if check == 'yes' and  self.getStatusCode(mp3320_url) == '200':
-                song['mp3320'] = mp3320_url
+            if check == 'yes' and  self.getStatusCode(mp3320_url) != '200':
+                pass
             else:
                 song['mp3320'] = mp3320_url
 
-            if check == 'yes' and  self.getStatusCode(mp3128_url) == '200':
-                song['mp3128'] = mp3128_url
+            if check == 'yes' and  self.getStatusCode(mp3128_url) != '200':
+                pass
             else:
                 song['mp3128'] = mp3128_url
             res_song.append(song)
-        print(res_song)
+        #print(res_song)
         return res_song
 
 QQMusicBox()
