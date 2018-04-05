@@ -83,7 +83,7 @@
             async: true,    // 或false,是否异步
             scriptCharset: 'UTF-8',
             //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            timeout: 30*000,       // 超时时间
+            timeout: 30*1000,       // 超时时间
             dataType: 'text',    // 返回的数据格式：json/xml/html/script/jsonp/text
             success: function (data, textStatus, jqXHR) {
                 songData = eval(data);
