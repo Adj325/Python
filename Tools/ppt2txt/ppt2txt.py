@@ -16,7 +16,8 @@ def pdf_to_txt(pdf_path):
         ppt_file = pptx.Presentation(pdf_path)
     except:
         print('警告：\r\t无法处理"{}"'.format(pdf_path))
-        print('\t此文件可能不是ppt文件\n')
+        print('\t此文件可能不是ppt文件')
+        print('\t或者，你需要把该文件另保存为"Power Point pptx文档"\n')
         return
 
     # 获取页数
