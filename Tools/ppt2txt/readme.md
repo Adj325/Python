@@ -1,4 +1,4 @@
-# pdf2txt
+# ppt2txt
 
 使用python-pptx，读取ppt/pptx/pptm，提取并拼接其文本。
 
