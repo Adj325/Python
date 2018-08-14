@@ -12,3 +12,4 @@
       - [常见编码问题解决方法](https://github.com/Adj325/Python/blob/master/WebSpiders/decode-encode/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.md)
   - [爬虫小总结](https://github.com/Adj325/Python/blob/master/WebSpiders/%E7%88%AC%E8%99%AB%E5%B0%8F%E6%80%BB%E7%BB%93.md)
   - [QQ音乐下载](https://github.com/Adj325/Python/tree/master/WebSpiders/QQMusicBox)
+  - [漫画下载(乙女漫画|极速漫画)](https://github.com/Adj325/Python/tree/master/WebSpiders/Cartoon)
