@@ -7,15 +7,15 @@ except:
         
 ppt_types = ['ppt', 'pptx', 'pptm']
 
-def pdf_to_txt(pdf_path):
+def ppt_to_txt(ppt_path):
 
     txt_content =  ''
     
-    # 打开pdf
+    # 打开ppt
     try:
-        ppt_file = pptx.Presentation(pdf_path)
+        ppt_file = pptx.Presentation(ppt_path)
     except:
-        print('警告：\r\t无法处理"{}"'.format(pdf_path))
+        print('警告：\r\t无法处理"{}"'.format(ppt_path))
         print('\t此文件可能不是ppt文件')
         print('\t或者，你需要把该文件另保存为"Power Point pptx文档"\n')
         return
@@ -32,14 +32,14 @@ def pdf_to_txt(pdf_path):
                 pass
     # 美化内容
     txt_content = beautfy(txt_content)
-    pdf_name = pdf_path.split('\\')[-1]
+    ppt_name = ppt_path.split('\\')[-1]
     try:
-        with open(pdf_name+'.txt', 'w', encoding='gb18030') as f:
+        with open(ppt_name+'.txt', 'w', encoding='gb18030') as f:
             f.write(txt_content)
     except:
-        with open(pdf_name+'.txt', 'w', encoding='utf-8') as f:
+        with open(ppt_name+'.txt', 'w', encoding='utf-8') as f:
             f.write(txt_content)
-    print('\n提示：\n\t"{}" 处理成功！\n\t"{}.txt" 保存在当前目录下\n'.format(pdf_path, pdf_name))
+    print('\n提示：\n\t"{}" 处理成功！\n\t"{}.txt" 保存在当前目录下\n'.format(ppt_path, ppt_name))
 
 def beautfy(content):
 
@@ -74,12 +74,12 @@ if __name__ == '__main__':
     choice = input('回车 - 处理当前目录所有ppt\n其它 - 处理特定ppt(文件若在当前目录，只需要填写文件名，否则需要填写完整路径)\n\n选择: ')
     if choice == '':
         print('处理当前目录所有ppt\n')
-        pdf_names = [f for f in os.listdir() if f.split('.')[-1].lower() in ppt_types]
+        ppt_names = [f for f in os.listdir() if f.split('.')[-1].lower() in ppt_types]
 
-        for pdf_name in pdf_names:
-            pdf_to_txt(pdf_name)
+        for ppt_name in ppt_names:
+            ppt_to_txt(ppt_name)
     else:
         print('Ctrl+C退出\n')
         while True:
-            pdf_path = input('pdf路径:')
-            pdf_to_txt(pdf_path)
+            ppt_path = input('ppt路径:')
+            ppt_to_txt(ppt_path)
