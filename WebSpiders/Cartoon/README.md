@@ -32,7 +32,7 @@
 
     数据获取过程：访问到某漫画的某章节后，后端会返回一个DM5密钥，使用此密钥访问chapterfun.ashx会得到一段混淆后的js，执行后得到两张图片(当前页与下一页)的下载链接。
 
-    难点：需要使用session，需要动态变化headers，js的获取链接只能拼接(data=data，会获取不到脚本)，js的执行需要调用selenium（execjs及pyv8都不行）。
+    难点：需要使用session，需要动态变化headers，js的获取链接只能拼接(data=data，会获取不到脚本;data=data不行，可能是因为没把/及空格给转码。)，js的执行需要调用selenium（execjs及pyv8都不行）。
 
     > PS：不直接使用selenium，主要是因为打开漫画首页会持续加载，不会自行停止。selenium的控制也是较麻烦的。
 
