@@ -93,9 +93,10 @@ print('提示: execjs 与 Node js 不兼容\n')
 host = 'http://api.sigujx.com'
 api_url = 'https://api.sigujx.com/yunjx{}/api.php'
 video_url = 'http://www.wasu.cn/Play/show/id/9654002?refer=sll'
-#video_url = input('电影链接: ')
-#name = input('电影名称: ')
 name = 'ggg'
+
+video_url = input('电影链接: ')
+name = input('电影名称: ')
 
 base_urls = ['https://api.bbbbbb.me/?url=',
              'https://api.sigujx.com/yunjx/?url=',
@@ -105,9 +106,6 @@ base_url = base_urls[3]
 base_url += video_url
 api_num = ''
 
-#print(getSigu('3417067554869'))
-#print(getSign('647c85640323e03a5b9ed18c263ef2af'))
-#input()
 while True:
     data = {
         'id': video_url,
