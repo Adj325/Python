@@ -44,18 +44,29 @@ def getHmd5Str(html):
     return s
 
 def getSiguStr(html):
-    return re.findall('sigu\("(\d+)"\)', html)[0]
+    return re.findall('"key":sigu\("(\d+)"\)', html)[0]
 
 def download_m3u8(url, name):
     print('\nm3u8:', url)
+    domain = re.findall("https?://.*?/", url)[0]
+    print('domain:', domain)
     download_path = os.getcwd() + os.sep +"download"
     file_name = download_path + os.sep + name + '.ts'
     if not os.path.exists(download_path):
         os.mkdir(download_path)
     all_content = requests.get(url).text # 获取M3U8的文件内容
+
+    
     file_line = all_content.split("\n") # 读取文件里的每一行
     for index, line in enumerate(file_line):
-        if "http" in line:
+        if '.m3u8' in line:
+            print('forward:', domain+line[1::])
+            download_m3u8(domain+line[1::], name)
+            return
+        elif ".ts" in line:
+            if 'http' not in line:
+                line = domain + line[1::]
+            print(line)
             res = requests.get(line)
             with open(file_name, 'ab') as f:
                 f.write(res.content)
@@ -77,15 +88,26 @@ def download_mp4(url_list, name):
         print("提示: {}_{}.mp4 下载完成".format(name, index+1))
     else:
         print("提示: {} 下载完成".format(name))
+print('提示: execjs 与 Node js 不兼容\n')
 
-host = 'http://api.bbbbbb.me'
-api_url = 'http://api.bbbbbb.me/yunjx{}/api.php'
-#video_url = 'https://www.iqiyi.com/v_19rqr832ok.html'
-video_url = input('电影链接: ')
-name = input('电影名称: ')
-base_url = 'http://api.bbbbbb.me/yunjx/?url='
+host = 'http://api.sigujx.com'
+api_url = 'https://api.sigujx.com/yunjx{}/api.php'
+video_url = 'http://www.wasu.cn/Play/show/id/9654002?refer=sll'
+#video_url = input('电影链接: ')
+#name = input('电影名称: ')
+name = 'ggg'
+
+base_urls = ['https://api.bbbbbb.me/?url=',
+             'https://api.sigujx.com/yunjx/?url=',
+             'https://api.sigujx.com/?url=',
+             'https://api.sigujx.com/v.php?url=']
+base_url = base_urls[3]
 base_url += video_url
 api_num = ''
+
+#print(getSigu('3417067554869'))
+#print(getSign('647c85640323e03a5b9ed18c263ef2af'))
+#input()
 while True:
     data = {
         'id': video_url,
@@ -97,20 +119,40 @@ while True:
     }
     print('video_url:', video_url)
     print('base_url:', base_url)
-    if 'sigu' in html:
+    # 解决 frame 识别
+    headers = {
+        'referer': base_url,
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    }
+    r = requests.get(base_url, headers=headers)
+    html = r.text
+    if len(html) < 10000:
+        break
+    #print(r.text)
+    if '"key":sigu' in html:
         sigu = getSiguStr(html)
+        #print('sigu:', sigu)
         data['key'] = getSigu(sigu)
     hmd5 = getHmd5Str(html)
+    #print('hmd5: {}'.format(hmd5))
     data['md5'] = getSign(hmd5)
 
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'referer': base_url,
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    }
+    print('api_url: {}'.format(api_url.format(api_num)))
+    print('data: {}'.format(data))
     r = requests.post(api_url.format(api_num), data=data)
     print('result:', r.json())
-    if r.json()['ext'] == 'm3u8':
+    print()
+    if r.json()['ext'] == 'm3u8' or 'm3u8' in r.json()['url']:
         url_encoded = r.json()['url']
         url = parse.unquote(url_encoded)
         download_m3u8(url, name)
         break
-    else if r.json()['ext'] == 'xml':
+    elif r.json()['ext'] == 'xml':
         r = requests.get(r.json()['url'])
         url_list = re.findall('<file><!\[CDATA\[(.*?)\]\]></file>', r.text)
         download_mp4(url_list, name)
@@ -126,3 +168,4 @@ while True:
         if 'yunjx' in i:
             api_num = i[5::]
     print()
+    
